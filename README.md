@@ -28,3 +28,14 @@ Linux logs -> Splunk UF or local forwarder -> Splunk Indexer (index=linux)
    git clone git@github.com:DeCyberGuardian/splunk-soc-lab.git
    cd splunk-soc-lab
 >>>>>>> 617a5ce3fc64520d006e76769eb7643d3976a582
+
+## | Folder                | Purpose                                                                |
+| --------------------- | ---------------------------------------------------------------------- |
+| **docs/**             | Write-ups, documentation, architecture notes                           |
+| **lab-diagrams/**     | Topology diagrams (VMs, network flow)                                  |
+| **configs/**          | Sysmon, Splunk inputs, Winlogbeat (if using ELK), Linux auditd configs |
+| **detection-rules/**  | SPL queries + Elastic rules mapped to MITRE ATT&CK                     |
+| **scripts/**          | Helper scripts (Linux log generators, attack automation, etc.)         |
+| **attack-scenarios/** | Brute force, privilege escalation, persistence simulations             |
+| **playbooks/**        | SOC triage + investigation guides                                      |
+| **screenshots/**      | Evidence for GitHub + portfolio                                        |
