@@ -1,0 +1,8 @@
+# local secrets & sensitive configs
+configs/sysmon/sysmonconfig_local.xml
+configs/splunk/inputs.conf.local
+configs/splunk/outputs.conf.local
+downloads/
+*.log
+*.pem
+.vscode/
