@@ -1,6 +1,7 @@
 # Splunk SOC Lab — Log Analysis, Detection Engineering & Alerting
 
 Author: DeCyberGuardian  
+
 Purpose: Build a SOC-style environment ingesting Windows (Sysmon + Event Logs) and Linux logs into Splunk. Create detections, dashboards and playbooks mapped to MITRE ATT&CK.
 
 ## Architecture
