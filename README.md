@@ -1,45 +1,56 @@
-# Splunk SOC Lab — Log Analysis, Detection Engineering & Alerting
+# 🛡️ Splunk SOC Lab — Log Analysis, Detection Engineering & Alerting
 
-Author: DeCyberGuardian  
+**Author:** DeCyberGuardian
 
-Purpose: Build a SOC-style environment ingesting Windows (Sysmon + Event Logs) and Linux logs into Splunk. Create detections, dashboards and playbooks mapped to MITRE ATT&CK.
+A SOC-style home lab that ingests Windows (Sysmon + Event Logs) and Linux telemetry into Splunk, then builds detections, dashboards, and triage playbooks mapped to MITRE ATT&CK. The point is to practise the full detection-engineering loop: generate real attack telemetry, catch it, alert on it, and write the runbook for the analyst who picks the alert up.
 
-## Architecture
-- Ubuntu VM: Splunk Enterprise (Indexer + Search Head)
-- Windows 11 VM: Endpoint; Sysmon + Splunk Universal Forwarder (UF)
-- Kali VM: Attacker & testing host for generating telemetry
+## 🧱 Architecture
 
-Data flow:
-Windows Events & Sysmon -> Splunk UF -> Splunk Indexer (index=sysmon, index=winevent)
-Linux logs -> Splunk UF or local forwarder -> Splunk Indexer (index=linux)
-
-## Goals / Deliverables
-1. Reproducible lab instructions (Ubuntu, Windows, Kali)
-2. Splunk inputs/outputs configuration (in `configs/splunk/`)
-3. Sysmon config (SwiftOnSecurity-derived) in `configs/sysmon/`
-4. Detection rules (SPL), YAML rule stubs, mapping to MITRE ATT&CK in `detections/`
-5. Dashboards & queries in `dashboards/`
-6. Runbook / triage playbooks in `docs/runbook/`
-7. Project documentation and demo screenshots in `proofs/`
-
-## Getting started (quick)
-1. Clone repo:
-   ```bash
-   git clone git@github.com:DeCyberGuardian/splunk-soc-lab.git
-   cd splunk-soc-lab
->>>>>>> 617a5ce3fc64520d006e76769eb7643d3976a582
-
-## Repository Structure Overview
-
-This project is organized into the following directories to maintain clear documentation and component separation.
-
-| Folder | Purpose |
+| Host | Role |
 | :--- | :--- |
-| **📘 `docs/`** | Lab documentation, setup guides, architecture notes, and environment breakdowns. |
-| **🗺️ `lab-diagrams/`** | Visual network topology, VM architecture, and log flow diagrams to explain how data moves through the lab. |
-| **⚙️ `configs/`** | Configurations for Sysmon, Splunk Forwarder, Winlogbeat, Linux auditd, and other log sources needed for detection engineering. |
-| **🛡️ `detection-rules/`** | SPL searches and Elastic Query DSL rules mapped to MITRE ATT&CK techniques, including tuning notes and detection logic. |
-| **🧰 `scripts/`** | Helper tools (log generators, Linux monitoring scripts, attacker automation, etc.) to support repeatable testing. |
-| **🚨 `attack-scenarios/`** | Realistic simulations such as brute force, lateral movement, privilege escalation, and persistence techniques. |
-| **📑 `playbooks/`** | SOC-style investigation guides, triage workflows, and recommended response steps mapped to alerts. |
-| **🖼️ `screenshots/`** | Evidence, dashboards, detections, and lab results used for documentation and portfolio presentation. |
+| Ubuntu VM | Splunk Enterprise (Indexer + Search Head) |
+| Windows 11 VM | Endpoint — Sysmon + Splunk Universal Forwarder |
+| Kali VM | Attacker / telemetry generator |
+
+**Data flow**
+
+```
+Windows Events & Sysmon ─┐
+                         ├─> Splunk UF ─> Splunk Indexer (index=sysmon, winevent, linux)
+Linux logs ──────────────┘
+```
+
+## 📂 Repository structure
+
+| Folder | What's in it |
+| :--- | :--- |
+| `docs/` | Setup guides, architecture notes, environment breakdown |
+| `lab-diagrams/` | Network topology, VM layout, and log-flow diagrams |
+| `configs/` | Sysmon (SwiftOnSecurity-derived), Splunk forwarder, and Linux auditd configs |
+| `detection-rules/` | SPL searches mapped to MITRE ATT&CK, with tuning notes |
+| `scripts/` | Log generators and attacker-automation helpers for repeatable testing |
+| `attack-scenarios/` | Brute force, lateral movement, privilege escalation, persistence |
+| `playbooks/` | Triage workflows and response steps mapped to alerts |
+| `screenshots/` | Dashboards, detections, and lab results |
+
+## 🚀 Getting started
+
+```bash
+git clone https://github.com/DeCyberGuardian/splunk-soc-lab.git
+cd splunk-soc-lab
+```
+
+Then follow `docs/` to stand up Splunk, point the forwarders at the indexer, and load the Sysmon config. Once telemetry is flowing, run a scenario from `attack-scenarios/` and watch the matching rule in `detection-rules/` fire.
+
+## 🎯 What this lab delivers
+
+- Reproducible build steps for the Ubuntu / Windows / Kali stack
+- Splunk inputs/outputs and Sysmon configuration
+- ATT&CK-mapped SPL detections with tuning notes
+- Dashboards and SOC triage playbooks
+- Screenshots as proof of detections firing
+
+## 🧠 Notes from building it
+
+- Detections are only as good as the telemetry under them — getting Sysmon configured correctly mattered more than the rule logic itself.
+- Writing the triage playbook alongside each detection forced me to think like the analyst receiving the alert, not just the engineer writing it.
